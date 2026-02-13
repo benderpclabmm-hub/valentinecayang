@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Valentine ❤️</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+min-height:100dvh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:'Segoe UI',sans-serif;
+overflow:hidden;
+color:white;
+text-align:center;
+padding:20px;
+background:radial-gradient(circle at top,#ff758f,#1a001f 70%);
+transition:filter .6s ease;
+}
+
+/* 🌙 Glow Background */
+body::before{
+content:"";
+position:absolute;
+width:200%;
+height:200%;
+background:radial-gradient(circle,rgba(255,255,255,0.15) 10%,transparent 60%);
+animation:glowMove 25s linear infinite;
+}
+
+@keyframes glowMove{
+0%{transform:translate(-25%,-25%) rotate(0deg);}
+100%{transform:translate(-25%,-25%) rotate(360deg);}
+}
+
+.blur-active{filter:blur(6px);}
+
+/* 💌 POPUP */
+.popup{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.7);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999;
+backdrop-filter:blur(5px);
+}
+
+.popup-box{
+background:white;
+color:#b0003a;
+padding:25px;
+border-radius:20px;
+max-width:350px;
+width:100%;
+animation:popupIn .6s cubic-bezier(.22,.61,.36,1);
+}
+
+@keyframes popupIn{
+from{transform:scale(.7);opacity:0;}
+to{transform:scale(1);opacity:1;}
+}
+
+/* 💎 CARD */
+.card{
+position:relative;
+z-index:2;
+background:rgba(255,255,255,0.1);
+padding:30px;
+border-radius:25px;
+backdrop-filter:blur(15px);
+box-shadow:0 20px 40px rgba(0,0,0,0.4);
+max-width:420px;
+width:100%;
+animation:fadeUp 1.2s cubic-bezier(.22,.61,.36,1);
+}
+
+@keyframes fadeUp{
+from{transform:translateY(40px);opacity:0;}
+to{transform:translateY(0);opacity:1;}
+}
+
+h1{font-size:clamp(1.6rem,5vw,2.3rem);margin-bottom:15px;}
+p{font-size:clamp(.9rem,3.5vw,1.1rem);margin-bottom:25px;line-height:1.6;}
+
+button{
+padding:12px 25px;
+border-radius:40px;
+border:none;
+background:white;
+color:#ff4d6d;
+font-weight:bold;
+cursor:pointer;
+transition:.4s cubic-bezier(.22,.61,.36,1);
+}
+
+button:hover{
+transform:scale(1.08);
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* ❤️ HEART */
+.heart{
+position:fixed;
+font-size:22px;
+pointer-events:none;
+animation:floatSmooth var(--duration) cubic-bezier(.22,.61,.36,1) forwards;
+}
+
+@keyframes floatSmooth{
+0%{transform:translate3d(0,0,0) scale(.8);opacity:0;}
+20%{opacity:1;}
+100%{
+transform:translate3d(var(--xMove),-110vh,0) scale(1.4);
+opacity:0;}
+}
+
+/* 🌸 FLOWER */
+.flower{
+position:fixed;
+top:-40px;
+font-size:24px;
+pointer-events:none;
+animation:fallFlower var(--duration) linear forwards;
+}
+
+@keyframes fallFlower{
+0%{transform:translate3d(0,0,0) rotate(0deg);opacity:0;}
+10%{opacity:1;}
+100%{
+transform:translate3d(var(--xMove),110vh,0) rotate(360deg);
+opacity:0;}
+}
+
+/* ✨ Sparkle */
+.sparkle{
+position:fixed;
+font-size:16px;
+animation:spark 2s linear forwards;
+}
+
+@keyframes spark{
+0%{opacity:1;transform:scale(.5);}
+100%{opacity:0;transform:scale(1.8);}
+}
+
+/* ✨ Typing */
+.message-box{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.75);
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+z-index:1000;
+}
+
+.message-content{
+background:white;
+color:#b0003a;
+padding:25px;
+border-radius:20px;
+max-width:400px;
+line-height:1.6;
+}
+/* 🖼 Photo Reveal */
+.photo-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.85);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999;
+animation:fadeIn .6s ease;
+}
+
+.photo-box{
+text-align:center;
+animation:zoomIn 1s cubic-bezier(.22,.61,.36,1);
+}
+
+.photo-box img{
+max-width:80vw;
+max-height:60vh;
+border-radius:20px;
+box-shadow:0 20px 50px rgba(0,0,0,0.6);
+}
+
+@keyframes zoomIn{
+from{transform:scale(.7);opacity:0;}
+to{transform:scale(1);opacity:1;}
+}
+
+@keyframes fadeIn{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="popup" id="valPopup">
+<div class="popup-box">
+<h2>💖 Will you be my Valentine? 💖</h2>
+<button id="yesBtn">YES 💕</button>
+<button id="noBtn">NO 🙈</button>
+</div>
+</div>
+
+<div class="card">
+<h1>💖 Happy Valentine 💖</h1>
+<p>
+Kamu adalah alasan senyumku setiap hari.  
+Terima kasih sudah menjadi bagian terindah  
+dalam hidup aku ❤️
+</p>
+<button onclick="extraLove()">Klik Aku 💕</button>
+</div>
+
+<!-- 🎵 Background Music -->
+<audio id="bgMusic" loop>
+<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b7f66.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 🎧 Whoosh -->
+<audio id="whooshSound">
+<source src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const popup=document.getElementById("valPopup");
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const whoosh=document.getElementById("whooshSound");
+const bgMusic=document.getElementById("bgMusic");
+
+/* LOAD */
+window.onload=()=>{popup.style.display="flex";};
+
+/* YES */
+yesBtn.onclick=()=>{
+popup.style.display="none";
+bgMusic.play();
+alert("YEAYYY ❤️ Timaaci Cayang aku yang sangat aku cintaiiiii!!!❤️❤️❤️❤️");
+heartRain(40);
+};
+
+/* NO */
+noBtn.onmouseover=()=>{
+noBtn.style.transform=`translate(${Math.random()*150-75}px,${Math.random()*150-75}px)`;
+};
+
+/* HEART */
+function createHeart(){
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+const d=Math.random()*2+4;
+heart.style.left=Math.random()*100+"vw";
+heart.style.setProperty('--duration',d+"s");
+heart.style.setProperty('--xMove',(Math.random()*100-50)+"px");
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),d*1000);
+}
+function heartRain(c){
+for(let i=0;i<c;i++){setTimeout(createHeart,i*120);}
+}
+
+/* FLOWER */
+function createFlower(){
+const f=document.createElement("div");
+f.className="flower";
+f.innerHTML="🌸";
+const d=Math.random()*2+3;
+f.style.left=Math.random()*100+"vw";
+f.style.setProperty('--duration',d+"s");
+f.style.setProperty('--xMove',(Math.random()*120-60)+"px");
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),d*1000);
+}
+function flowerRain(c){
+for(let i=0;i<c;i++){setTimeout(createFlower,i*80);}
+}
+
+/* SPARKLE */
+function sparkle(){
+for(let i=0;i<20;i++){
+const s=document.createElement("div");
+s.className="sparkle";
+s.innerHTML="✨";
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),2000);
+}
+}
+
+/* TYPING */
+function showTypingMessage(text){
+const box=document.createElement("div");
+box.className="message-box";
+const content=document.createElement("div");
+content.className="message-content";
+box.appendChild(content);
+document.body.appendChild(box);
+let i=0;
+function type(){
+if(i<text.length){
+content.innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,25);
+}}
+type();
+box.onclick=()=>box.remove();
+}
+
+/* EXTRA LOVE */
+function extraLove(){
+
+document.body.classList.add("blur-active");
+
+whoosh.currentTime=0;
+whoosh.play();
+
+flowerRain(45);
+sparkle();
+
+setTimeout(()=>{
+
+document.body.classList.remove("blur-active");
+
+/* tampilkan foto dulu */
+showPhoto();
+
+/* setelah 2 detik baru teks muncul */
+setTimeout(()=>{
+showTypingMessage("Cayang aku yang masyallah cantikknyaa dann lucuuuuu banget yang buat akuu gemess setiap liat ayangg, Happy Valentine Day yaa cintaaa acuuuuu, Maaci dah lahir didunia ini yaa sayanggnya acuuu, Lopyu so muchhh babyykuu sayanggg, mwah mwah mwah ❤️");
+heartRain(35);
+},2000);
+
+},2000);
+}
+
+/* 🖼 Show Photo */
+function showPhoto(){
+
+const overlay=document.createElement("div");
+overlay.className="photo-overlay";
+
+const box=document.createElement("div");
+box.className="photo-box";
+
+const img=document.createElement("img");
+img.src="sayang.jpeg"; // ganti dengan nama foto kamu
+
+box.appendChild(img);
+overlay.appendChild(box);
+document.body.appendChild(overlay);
+
+/* klik foto untuk lanjut */
+overlay.onclick=()=>{
+overlay.remove();
+};
+
+}
+
+</script>
+</body>
+</html>
